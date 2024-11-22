@@ -4,7 +4,7 @@ const globalConfig = {
   username: "HoyoLab GDS",
   update: {
     url: "https://gist.githubusercontent.com/WiLuX-Source/240c274901dcb74b8f91e1c46a93096e/raw/update.json", // undefined for disabling updates
-    version: "1.0.0",
+    version: "1.0.1",
     repo: "WiLuX-Source/HoyoLab-GDS",
   },
   profiles: [
@@ -60,7 +60,7 @@ async function main() {
   if (globalConfig.profiles.length === 0) {
     return Logger.log("No profiles found.");
   }
-
+  updateCheck()
   const messages = await Promise.all(globalConfig.profiles.map(autoSignFunction));
   const hoyolabResp = `${messages.join("\n\n")}\n-# ${versionString()}`;
 
@@ -147,7 +147,7 @@ function updateCheck() {
       // If you are developing based on this don't forget to set your update link to undefined!
       return;
     } else {
-      return postWebhook(`There is a new release available please update from this [link](https://raw.githubusercontent.com/${globalConfig.update.repo}/${metadata.update.commit}/main.gs)`); //https://raw.githubusercontent.com/repo/commit/dir
+      return postWebhook(`There is a new release available please update from this [link](https://raw.githubusercontent.com/${globalConfig.update.repo}/${metadata.commit}/main.gs)`); //https://raw.githubusercontent.com/repo/commit/dir
     }
   } else {
     return postWebhook("Cannot parse response from update url.");
